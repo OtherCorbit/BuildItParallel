@@ -3,7 +3,7 @@ Tool for preserving coordinate data, generating parallel lines, and (hopefully) 
 and efficiency while working on the BuildTheEarth project.
 
 > [!WARNING]
-> Mod currently does not work very well with CubicChunks (I'm working on it), and does not work at all with ReplayMod
+> Mod currently does not work very well with CubicChunks (I'm working on it), and does not work at all with ReplayMod.
 
 ## Features
 ### Version 1.0.1.0
