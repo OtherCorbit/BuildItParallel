@@ -118,13 +118,13 @@ public class ShapeHandler
             float[] nv = Constants.NODE_VERTICES;
             float[] c = node.getColor();
 
-            float[] nodePos = {(float) (node.posX), (float) (node.posY), (float) (node.posZ)};
+            float[] nodeRelPos = {(float) (node.posX - renderPos[0]), (float) (node.posY - renderPos[1]), (float) (node.posZ - renderPos[2])};
 
             /// For every vertex of the NODE_VERTICES...
             for (int i = 0; i < nv.length - 2; i += 3)
             {
-                /// Create a point, relative to the middle of the node's stored world position, with the node's color.
-                buffer.pos(nodePos[0] - renderPos[0] + nv[i], nodePos[1] - renderPos[1] + nv[i + 1], nodePos[2] - renderPos[2] + nv[i + 2]).color(c[0], c[1], c[2], c[3]).endVertex();
+                /// Create a point, relative to the middle of the node's relative render position, with the node's color.
+                buffer.pos(nodeRelPos[0] + nv[i], nodeRelPos[1] + nv[i + 1], nodeRelPos[2] + nv[i + 2]).color(c[0], c[1], c[2], c[3]).endVertex();
             }
 
             /// Converts those BufferBuilder commands into OpenGL commands.
@@ -136,8 +136,8 @@ public class ShapeHandler
             /// Makes the floor lines not show on top of the floor.
             GlStateManager.depthFunc(GL11.GL_LESS);
 
-            buffer.pos(nodePos[0] - renderPos[0], nodePos[1] - renderPos[1], nodePos[2] - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
-            buffer.pos(nodePos[0] - renderPos[0],  -renderPos[1], nodePos[2] - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(nodeRelPos[0], nodeRelPos[1], nodeRelPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(nodeRelPos[0],  -renderPos[1], nodeRelPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
 
             tessellator.draw();
 
@@ -152,9 +152,11 @@ public class ShapeHandler
             buffer.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 
             float[] c = line.getColor();
+            float[] aPos = {(float) (line.endpointAX - renderPos[0]), (float) (line.endpointAY - renderPos[1]), (float) (line.endpointAZ - renderPos[2])};
+            float[] bPos = {(float) (line.endpointBX - renderPos[0]), (float) (line.endpointBY - renderPos[1]), (float) (line.endpointBZ - renderPos[2])};
 
-            buffer.pos(line.endpointAX - renderPos[0], line.endpointAY - renderPos[1], line.endpointAZ - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
-            buffer.pos(line.endpointBX - renderPos[0], line.endpointBY - renderPos[1], line.endpointBZ - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(aPos[0], aPos[1], aPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(bPos[0], bPos[1], bPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
 
             tessellator.draw();
         }

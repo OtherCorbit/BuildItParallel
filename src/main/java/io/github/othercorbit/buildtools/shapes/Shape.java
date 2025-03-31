@@ -1,6 +1,7 @@
 package io.github.othercorbit.buildtools.shapes;
 
 import io.github.othercorbit.Constants;
+import io.github.othercorbit.ParallelConfig;
 import net.minecraft.util.text.TextFormatting;
 
 import java.awt.Color;
@@ -51,7 +52,17 @@ public abstract class Shape
 
     public float[] getColor()
     {
-        return Constants.GROUP_COLORS[this.group].getRGBComponents(new float[4]);
+        float[] color = Constants.GROUP_COLORS[this.group].getRGBColorComponents(new float[4]);
+        if (this instanceof Node)
+        {
+            color[3] = (float) (ParallelConfig.nodesSubcategory.nodeTransparency / 255d);
+        }
+        else
+        {
+            color[3] = (float) (ParallelConfig.linesSubcategory.lineTransparency / 255d);
+        }
+        
+        return color;
     }
 
     public TextFormatting getTextColor()
