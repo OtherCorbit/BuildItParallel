@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "builditparallel",
+    "name": "Build It Parallel",
+    "description": "Tool for preserving coordinate data, generating parallel lines, and (subsequently) increasing build quality and efficiency.\n",
+    "version": "1.0.0.0",
+    "mcversion": "1.12.2",
+    "url": "https://github.com/OtherCorbit/BuildItParallel",
+    "updateUrl": "",
+    "authorList": ["Corbit"],
+    "credits": "kurrycat, for the tremendous rendering help\n - Forge Documentation, for slightly helping to make things make sense\n - XboxBedrock, for assisting with gradle setup",
+    "logoFile": "pack.png",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
