@@ -4,6 +4,7 @@ import io.github.othercorbit.Constants;
 import io.github.othercorbit.buildtools.shapes.Line;
 import io.github.othercorbit.buildtools.shapes.Node;
 import io.github.othercorbit.client.renderer.ShapeRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -62,8 +63,15 @@ public class ShapeHandler
             listID = GL11.glGenLists(1);
         }
 
+        /// Is the location everything is rendered relative to, as opposed to being relative to (0, 0, 0).
+        ///     Fixes rendering errors at large coordinates.
+        double[] renderPos = {Minecraft.getMinecraft().player.posX,
+                              Minecraft.getMinecraft().player.posY,
+                              Minecraft.getMinecraft().player.posZ
+                             };
+
         /// Begins new list at the ID listID, that is only compiled (not execute as commands are added to the list).
-        /// The positions of the nodes and lines are relative to (0, 0, 0).
+        ///     The positions of the nodes and lines are relative to renderPos[].
         GL11.glNewList(listID, GL11.GL_COMPILE);
         {
             /// Apparently line width is set by most hardware to be 1, so this really doesn't need to be here...
@@ -76,15 +84,17 @@ public class ShapeHandler
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder buffer = tessellator.getBuffer();
 
-            nodeCommandsForList(tessellator, buffer);
+            nodeCommandsForList(tessellator, buffer, renderPos);
 
-            lineCommandsForList(tessellator, buffer);
+            lineCommandsForList(tessellator, buffer, renderPos);
 
             /// Resets depth function.
             GlStateManager.depthFunc(GL11.GL_LEQUAL);
         }
         /// End of the list.
         GL11.glEndList();
+
+        ShapeRenderer.renderPos = renderPos;
 
         if (!listExists)
         {
@@ -93,7 +103,7 @@ public class ShapeHandler
         }
     }
 
-    private static void nodeCommandsForList(Tessellator tessellator, BufferBuilder buffer)
+    private static void nodeCommandsForList(Tessellator tessellator, BufferBuilder buffer, double[] renderPos)
     {
         for (Node node : ShapeHandler.nodes)
         {
@@ -114,7 +124,7 @@ public class ShapeHandler
             for (int i = 0; i < nv.length - 2; i += 3)
             {
                 /// Create a point, relative to the middle of the node's stored world position, with the node's color.
-                buffer.pos(nodePos[0] + nv[i], nodePos[1] + nv[i + 1], nodePos[2] + nv[i + 2]).color(c[0], c[1], c[2], c[3]).endVertex();
+                buffer.pos(nodePos[0] - renderPos[0] + nv[i], nodePos[1] - renderPos[1] + nv[i + 1], nodePos[2] - renderPos[2] + nv[i + 2]).color(c[0], c[1], c[2], c[3]).endVertex();
             }
 
             /// Converts those BufferBuilder commands into OpenGL commands.
@@ -126,8 +136,8 @@ public class ShapeHandler
             /// Makes the floor lines not show on top of the floor.
             GlStateManager.depthFunc(GL11.GL_LESS);
 
-            buffer.pos(nodePos[0], nodePos[1], nodePos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
-            buffer.pos(nodePos[0], 0, nodePos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(nodePos[0] - renderPos[0], nodePos[1] - renderPos[1], nodePos[2] - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(nodePos[0] - renderPos[0],  -renderPos[1], nodePos[2] - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
 
             tessellator.draw();
 
@@ -135,7 +145,7 @@ public class ShapeHandler
         }
     }
 
-    private static void lineCommandsForList(Tessellator tessellator, BufferBuilder buffer)
+    private static void lineCommandsForList(Tessellator tessellator, BufferBuilder buffer, double[] renderPos)
     {
         for (Line line : ShapeHandler.lines)
         {
@@ -143,8 +153,8 @@ public class ShapeHandler
 
             float[] c = line.getColor();
 
-            buffer.pos(line.endpointAX, line.endpointAY, line.endpointAZ).color(c[0], c[1], c[2], c[3]).endVertex();
-            buffer.pos(line.endpointBX, line.endpointBY, line.endpointBZ).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(line.endpointAX - renderPos[0], line.endpointAY - renderPos[1], line.endpointAZ - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(line.endpointBX - renderPos[0], line.endpointBY - renderPos[1], line.endpointBZ - renderPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
 
             tessellator.draw();
         }

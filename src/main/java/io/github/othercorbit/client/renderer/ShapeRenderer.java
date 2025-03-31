@@ -14,6 +14,8 @@ public class ShapeRenderer
 {
     public static boolean listExists = false;
     public static int listID = -1;
+    /// The position everything is rendered relative to. Fixes rendering errors at large coordinates.
+    public static double[] renderPos;
 
     /** This method is run every single frame, so it is best, for optimization, to create more variables
     /*     that will be cleared out by the JVM garbage collector than to run more methods, but have fewer variables.
@@ -50,7 +52,7 @@ public class ShapeRenderer
             double camPosY = playerPrevPosY + (playerPosY - playerPrevPosY) * partialTicks;
             double camPosZ = playerPrevPosZ + (playerPosZ - playerPrevPosZ) * partialTicks;
             /// ...we have to bob it around too.
-            GL11.glTranslated(-camPosX, -camPosY, -camPosZ);
+            GL11.glTranslated(renderPos[0] - camPosX,renderPos[1] - camPosY,renderPos[2] - camPosZ);
             /// It's a little inconvenient.
 
             /// Calls the GL list.
