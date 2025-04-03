@@ -137,7 +137,7 @@ public class ShapeHandler
             GlStateManager.depthFunc(GL11.GL_LESS);
 
             buffer.pos(nodeRelPos[0], nodeRelPos[1], nodeRelPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
-            buffer.pos(nodeRelPos[0],  -renderPos[1], nodeRelPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
+            buffer.pos(nodeRelPos[0], -renderPos[1], nodeRelPos[2]).color(c[0], c[1], c[2], c[3]).endVertex();
 
             tessellator.draw();
 
