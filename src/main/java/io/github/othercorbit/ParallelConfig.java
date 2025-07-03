@@ -12,10 +12,27 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config(modid = BuildItParallel.MODID)
 public class ParallelConfig
 {
-//    @Name("Persistent Shapes")
-//    @Comment({"Whether or not to save node and line positions and groups between world loading.",
-//              "Default: true"})
-//    public static boolean shapeSave = true;
+    @Name("Persistent Shapes")
+    @Comment({"Whether or not to save node and line positions and groups between world loading.",
+              "Default: true"})
+    public static boolean saveShapes = true;
+
+    @Name("Maximum Selection Distance")
+    @Comment({"Furthest possible distance you can be from a node or line and still select it.",
+            "Default: true"})
+    public static double furthestSelectDistance = 30;
+
+    @Name("Maximum Selection Resolution")
+    @Comment({"Furthest possible distance your cursor's ray cast can be from a node or line and still select it.",
+            "Default: true"})
+    public static double greatestSelectResolution = 1;
+
+    @Name("Auto Use /cs tpll")
+    @Comment({"Whether or not to use /cs tpll in the auto tpll keybind."})
+    public static boolean useCSTPLL = false;
+
+    @Name(value = "Hover over a config item's name (left side) to get more info about it")
+    public static Info info = new Info();
 
     @Name(value = "Node Settings")
     public static NodesSubcategory nodesSubcategory = new NodesSubcategory();
@@ -24,6 +41,8 @@ public class ParallelConfig
     public static LinesSubcategory linesSubcategory = new LinesSubcategory();
 
     ////////////////////////////////////
+
+    public static class Info { }
 
     public static class NodesSubcategory
     {
@@ -34,26 +53,26 @@ public class ParallelConfig
         @SlidingOption
         public int nodeTransparency = 127;
 
-//        @Name("Node Transparency (Node Mode on)")
-//        @Comment({"",
-//                  "Default: 255"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int nodeModeTransparency = 255;
-//
-//        @Name("Selected Node Outline Color (Will be grayscale)")
-//        @Comment({"",
-//                  "Default: 255"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int nodeSelectOutlineColor = 255;
-//
-//        @Name("Selected Node Outline Transparency")
-//        @Comment({"",
-//                  "Default: 127"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int nodeSelectOutlineTransparency = 127;
+        @Name("Node Transparency (Node Mode on)")
+        @Comment({"",
+                  "Default: 255"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int nodeModeTransparency = 255;
+
+        @Name("Selected Node Outline Color (Will be grayscale)")
+        @Comment({"",
+                  "Default: 255"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int nodeSelectOutlineColor = 255;
+
+        @Name("Selected Node Outline Transparency")
+        @Comment({"",
+                  "Default: 127"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int nodeSelectOutlineTransparency = 127;
     }
 
     public static class LinesSubcategory
@@ -65,26 +84,26 @@ public class ParallelConfig
         @SlidingOption
         public int lineTransparency = 127;
 
-//        @Name("Line Transparency (Node Mode on)")
-//        @Comment({"",
-//                  "Default: 255"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int lineNodeModeTransparency = 255;
-//
-//        @Name("Selected Line Outline Color (Will be grayscale)")
-//        @Comment({"",
-//                  "Default: 255"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int lineSelectOutlineColor = 255;
-//
-//        @Name("Selected Line Outline Transparency")
-//        @Comment({"",
-//                  "Default: 127"})
-//        @RangeInt(min = 0, max = 255)
-//        @SlidingOption
-//        public int lineSelectOutlineTransparency = 127;
+        @Name("Line Transparency (Node Mode on)")
+        @Comment({"",
+                  "Default: 255"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int lineNodeModeTransparency = 255;
+
+        @Name("Selected Line Outline Color (Will be grayscale)")
+        @Comment({"",
+                  "Default: 255"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int lineSelectOutlineColor = 255;
+
+        @Name("Selected Line Outline Transparency")
+        @Comment({"",
+                  "Default: 127"})
+        @RangeInt(min = 0, max = 255)
+        @SlidingOption
+        public int lineSelectOutlineTransparency = 127;
     }
 
     @SubscribeEvent

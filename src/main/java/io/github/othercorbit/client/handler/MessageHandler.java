@@ -31,4 +31,9 @@ public class MessageHandler
         this.message.setStyle(this.style);
         Minecraft.getMinecraft().player.sendMessage(this.message);
     }
+
+    public static void sendMessage(String message)
+    {
+        new MessageHandler(message).sendMessage();
+    }
 }

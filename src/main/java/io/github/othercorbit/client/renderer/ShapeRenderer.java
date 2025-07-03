@@ -1,6 +1,6 @@
 package io.github.othercorbit.client.renderer;
 
-import io.github.othercorbit.client.handler.ShapeHandler;
+import io.github.othercorbit.buildtools.shapes.handler.ShapeHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraftforge.client.event.RenderWorldLastEvent;

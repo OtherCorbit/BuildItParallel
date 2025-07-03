@@ -1,8 +1,12 @@
 package io.github.othercorbit;
 
-import io.github.othercorbit.client.handler.ClientKeybindEventListener;
+import io.github.othercorbit.client.commands.ClearElevationCommand;
+import io.github.othercorbit.client.commands.SetElevationCommand;
+import io.github.othercorbit.client.handler.ClientInputEventListener;
+import io.github.othercorbit.client.handler.ChatListener;
 import io.github.othercorbit.client.renderer.ShapeRenderer;
 import io.github.othercorbit.init.ClientProxy;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -17,6 +21,9 @@ public final class BuildItParallel
      * <ul><li>Nodes and lines</li>
      *
      * <li>F3+N overwrite to use gmc and gmsp (NOT IN THIS VERSION)</li></ul>
+     * - have to catch debug that doesn't have an event
+     * - catch keybinds?
+     * - mixins?
      *
      * Resource pack/visual options: (NOT IN THIS VERSION)
      *      <ul><li>smooth text (NOT IN THIS VERSION)</li>
@@ -53,7 +60,11 @@ public final class BuildItParallel
         logger = event.getModLog();
         ClientProxy.initKeybindings();
 
-        MinecraftForge.EVENT_BUS.register(new ClientKeybindEventListener());
+        MinecraftForge.EVENT_BUS.register(new ClientInputEventListener());
+        MinecraftForge.EVENT_BUS.register(new ChatListener());
         MinecraftForge.EVENT_BUS.register(new ShapeRenderer());
+
+        ClientCommandHandler.instance.registerCommand(new SetElevationCommand());
+        ClientCommandHandler.instance.registerCommand(new ClearElevationCommand());
     }
 }

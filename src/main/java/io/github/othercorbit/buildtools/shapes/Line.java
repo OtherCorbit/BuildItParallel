@@ -22,6 +22,18 @@ public class Line extends Shape
         this.endpointBZ = B.posZ;
     }
 
+    public boolean equals(Line other)
+    {
+        if (this.endpointAX != other.endpointAX) return false;
+        if (this.endpointAY != other.endpointAY) return false;
+        if (this.endpointAZ != other.endpointAZ) return false;
+        if (this.endpointBX != other.endpointBX) return false;
+        if (this.endpointBY != other.endpointBY) return false;
+        if (this.endpointBZ != other.endpointBZ) return false;
+
+        return true;
+    }
+
     @Override
     public String toString()
     {

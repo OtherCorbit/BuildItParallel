@@ -2,6 +2,8 @@ package io.github.othercorbit;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -13,9 +15,16 @@ public class Constants
 
     ///////////
 
-    public static final KeyBinding[] KEYBINDS =
-            { new KeyBinding("Create Node", Keyboard.KEY_X, "BuildItParallel Keybindings" ),
-              new KeyBinding("Toggle Node Mode", Keyboard.KEY_C, "BuildItParallel Keybindings" )};
+    public static final KeyBinding[] KEYBINDS = {
+            new KeyBinding("Toggle Between Creative and Spectator Mode", KeyConflictContext.IN_GAME, Keyboard.KEY_N, "key.category.bip"),
+            new KeyBinding("Auto tpll Paste", KeyConflictContext.IN_GAME, Keyboard.KEY_NONE, "key.category.bip"),
+
+            new KeyBinding("Create Node", KeyConflictContext.IN_GAME, Keyboard.KEY_X, "key.category.bip_node_mode" ),
+            new KeyBinding("Toggle Node Mode", KeyConflictContext.IN_GAME, Keyboard.KEY_C, "key.category.bip_node_mode" ),
+            new KeyBinding("Aux Key (set same as sprint)", KeyConflictContext.IN_GAME, Keyboard.KEY_LSHIFT, "key.category.bip_node_mode" ),
+            new KeyBinding("Alt Aux Key", KeyConflictContext.IN_GAME, Keyboard.KEY_LMENU, "key.category.bip_node_mode" ),
+            new KeyBinding("Undo Previous Action", KeyConflictContext.IN_GAME, KeyModifier.CONTROL, Keyboard.KEY_Z, "key.category.bip_node_mode")
+    };
 
     public static final int NUMBER_OF_KEYBINDINGS = KEYBINDS.length;
 
@@ -113,4 +122,52 @@ public class Constants
             0.0f, 0.25f, 0.0f,         /// Face 4, top half
             0.0625f, 0.0f, 0.0625f,
     };
+
+    // This method is only useful because I'm not hardcoding the bounding boxes so that I can easily change them, and because I will not be using .objs for the node and line models
+    public static final float[] NODE_OUTLINE_VERTICES = {
+            0.0925f, 0.0f, 0.0925f,
+            0.0f, -0.12375f, 0.0f,     /// Face 1, bottom half
+            0.0925f, 0.0f, -0.0925f,
+
+//          0.0925f, 0.0f, -0.0925f,
+            0.0f, -0.12375f, 0.0f,     /// Face 2, bottom half
+            -0.0925f, 0.0f, -0.0925f,
+
+//          -0.0925f, 0.0f, -0.0925f,
+            0.0f, -0.12375f, 0.0f,     /// Face 3, bottom half
+            -0.0925f, 0.0f, 0.0925f,
+
+//          -0.0925f, 0.0f, 0.0925f,
+            0.0f, -0.12375f, 0.0f,     /// Face 4, bottom half
+            0.0925f, 0.0f, 0.0925f,
+
+//          0.0925f, 0.0f, 0.0925f,
+            0.0f, 0.55f, 0.0f,         /// Face 1, top half
+            0.0925f, 0.0f, -0.0925f,
+
+//          0.0925f, 0.0f, -0.0925f,
+            0.0f, 0.55f, 0.0f,         /// Face 2, top half
+            -0.0925f, 0.0f, -0.0925f,
+
+//          -0.0925f, 0.0f, -0.0925f,
+            0.0f, 0.55f, 0.0f,         /// Face 3, top half
+            -0.0925f, 0.0f, 0.0925f,
+
+//          -0.0925f, 0.0f, 0.0925f,
+            0.0f, 0.55f, 0.0f,         /// Face 4, top half
+            0.0925f, 0.0f, 0.0925f,
+    };
+
+    public static final double SHAPE_SELECTION_STEPS_PER_BLOCK = 2d;
+
+    public static final double SHAPE_MAX_SELECTION_DISTANCE_FROM_STEP = 1 / SHAPE_SELECTION_STEPS_PER_BLOCK;
+
+    public static final String[] SET_ELEV_COMMAND = {"setelevation", "setelev", "se"};
+
+    public static final String[] CLEAR_ELEV_COMMAND = {"clearelevation", "clearelev", "ce"};
+
+    public static final String CHAT_HEADER = "[BIP] - ";
+    public static final TextFormatting CHAT_COLOR = TextFormatting.BLUE;
+
+    public static final int TRIG_RES = 4;
 }
